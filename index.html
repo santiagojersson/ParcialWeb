@@ -1,16 +1,41 @@
 <!DOCtype html>
 <html>
     <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
    
     <script src="js/jquery.min.js"></script>
      <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 <body>
 <div class="container">
-  <h1>My First Bootstrap Page</h1>
-  <p>This is some text.</p> 
+  <h1>Tienda</h1>
+  <ul class="nav nav-tabs">
+  <li class="active"><a href="#Home">Home</a></li>
+  <li><a href="#Drinks" data-toggle="tab">Drinks</a></li>
+  <li><a href="#Lunch" data-toggle="tab">Lunch</a></li>
+  <li><a href="#Food" data-toggle="tab">Food</a></li>
+  <li><form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form></li>
+</ul>
+
+<div class="tab-content ">
+  <div class="tab-pane active" id="Home">Home</div>
+  <div class="tab-pane" id="Drinks">Dri</div>
+  <div class="tab-pane" id="Lunch">Lun</div>
+  <div class="tab-pane" id="Food">Food</div>
+  <div class="tab-pane" id="Sea">Sea</div>
+
+  
+  
+</div> 
 </div>
 <body>
 </html>
