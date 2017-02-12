@@ -1,5 +1,5 @@
-  <!DOCtype html>
-  <html>
+  <!DOCTYPE html>
+  <html ng-app="myApp">
   <head>
 
     <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   </head>
-  <body ng-app="myApp">
+  <body>
 
     <div class="container">
       <h1>Tienda</h1>
@@ -102,24 +102,24 @@
             <div class="tab-content ">
               <div id="home" class="tab-pane fade in active" ng-controller="cargarProductos">
                 <div class="row">
-                  <div class="col-xs-10 col-sm-6 col-md-4" ng-repeat="data in productos.products | filter : search">
+                  <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="datos in productos.products | filter : search">
                     <div class="col-item">
                       <div class="post-img-content">
-                        <img src="http://placehold.it/350x260" class="img-responsive" />
+                        <img src={{datos.img}} class="img-responsive" />
                         <span class="post-title">
-                          <b>{{data.name}}</b><br>
-                          <b>{{data.available}}</b>
+                          <b>{{datos.name}}</b><br>
+                          <b>{{datos.available}}</b>
                         </span>
-                        <span class="round-tag">{{data.best_seller}}</span>
+                        <span class="round-tag">{{datos.best_seller}}</span>
                       </div>
                       <div class="info">
                         <div class="row">
                           <div class="price col-md-8">
-                            <h5>{{data.description}} </h5>
+                            <h5>{{datos.description}} </h5>
                             
                           </div>
                           <div class="rating hidden-sm col-md-4">
-                            <h5 class="price-text-color">{{data.price}}</h5>
+                            <h5 class="price-text-color">{{datos.price}}</h5>
                           </div>
                         </div>
                         <div class="separator clear-left">
@@ -212,6 +212,6 @@
         </div> 
 
         <body>
-        <script src="js/index.js"></script>
+        
         <script src="js/controllers.js"></script>
           </html>
