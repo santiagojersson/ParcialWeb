@@ -2,17 +2,22 @@
   <html ng-app="myShop">
   <head>
 
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script data-require="angular.js@1.2.x" src="http://code.angularjs.org/1.2.4/angular.js" data-semver="1.2.4"></script>
+    
     <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="bootstrap-3.3.7-dist/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
+    
     <script src="js/ui-bootstrap-tpls.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/rzslider.css">
     <script type="text/javascript" src="js/rzslider.js"></script>
     
+
     
     <title>Tienda</title>
     <link rel="icon" href="img/shopping.ico" type="image/x-icon">
@@ -23,8 +28,8 @@
 
     <div class="container">
       <h1 id="TituloTienda">Tienda</h1>
-       
-        <button href="#Car" id="botonCarro" class="btn btn-info btn-lg" data-toggle="tab" data-placement="bottom" title="You don't have any products yet."><span class="glyphicon glyphicon-shopping-cart"></span> <span class="items">0</span></button>
+
+      <button href="#Car" id="botonCarro" class="btn btn-info btn-lg" data-toggle="tab" data-placement="bottom" title="You don't have any products yet."><span class="glyphicon glyphicon-shopping-cart"></span> <span class="items">0</span></button>
       <br>
       <br>
       
@@ -47,12 +52,10 @@
       </form></li>
 
       <li>
-        <div ng-controller="MainCtrl" class="wrapper">
-           <rzslider rz-slider-model="slider_translate.minValue" rz-slider-high="slider_translate.maxValue" rz-slider-options="slider_translate.options"></rzslider>
-        </div>
-        </li>
 
-     
+      </li>
+
+
     </ul>
 
 
@@ -89,19 +92,46 @@
              </table>
            </div>
          </div>
-       </div>
-       
+         <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+            </span> Precios</a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+           <table class="table">
+             <tr>
+              <td>
+               <div ng-controller="cargarProductos" class="wrapper">
+                 <div class="slider">
+                  Precio minimo <input type="number" min="1000" max="200000"  ng-model= "priceSlider.min" > <br>
+                  Precio maximo <input type="number" min="1000" max="200000"  ng-model= "priceSlider.max">
+                 <rzslider
+      rz-slider-floor="priceSlider.floor"
+      rz-slider-ceil="priceSlider.ceil"
+      rz-slider-model="priceSlider.min"
+      rz-slider-high="priceSlider.max"
+      rz-slider-step="{{priceSlider.step}}"></rzslider>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
 
-   </div>
- </div>
 
- <div class="col-sm-10 col-md-10">
+  </div>
+</div>
+
+<div class="col-sm-10 col-md-10">
   <div class="well">
     <div class="tab-content ">
       <div id="home" class="tab-pane fade in active" ng-controller="cargarProductos" >
         <div class="row">
 
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="datos in productos.products | filter:search:strict | filter:myFilter | filter:cate">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="datos in productos.products | filter:search:strict | filter:myFilter | filter:cate | filter:minFilter | filter:maxFilter">
             <div class="col-item">
               <div class="post-img-content">
                 <img src={{datos.img}} class="img-responsive" />
@@ -161,7 +191,7 @@
                         <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
                       </div>
                       <div class="col-xs-6">
-                      <button href="#home" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="tab">
+                        <button href="#home" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="tab">
                           <span class="glyphicon glyphicon-share-alt"></span> Continue shopping
                         </button>
                       </div>
@@ -222,5 +252,6 @@
 
 <body>
 
-  <script src="js/controllers.js"></script>
+
+  <script src="js/app.js"></script>
   </html>

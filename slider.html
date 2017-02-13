@@ -301,9 +301,9 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     //Slider config with custom display function
     $scope.slider_translate = {
         minValue: 10000,
-        maxValue: 40000,
+        maxValue: 30000,
         options: {
-            ceil: 60000,
+            ceil: 200000,
             floor: 0,
             translate: function (value) {
                 return '$' + value;
