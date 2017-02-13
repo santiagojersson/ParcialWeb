@@ -1,4 +1,4 @@
-var misDatos= angular.module('myApp',[]);
+var misDatos= angular.module('myShop',[]);
       misDatos.controller('cargarProductos',function($scope,$http){
         $scope.importar= function(){
           $http.get('./dataParcial.json').success(function(datos){
@@ -7,4 +7,9 @@ var misDatos= angular.module('myApp',[]);
           });
         }
         $scope.importar();
-      });
+     
+        
+
+});
+
+

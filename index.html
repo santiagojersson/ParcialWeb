@@ -1,5 +1,5 @@
   <!DOCTYPE html>
-  <html ng-app="myApp">
+  <html ng-app="myShop">
   <head>
 
     <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -20,14 +20,14 @@
       <h1>Tienda</h1>
       <ul class="nav nav-tabs">
 
-        <li><a href="#Drinks" data-toggle="tab">Drinks</a></li>
-        <li><a href="#Lunch" data-toggle="tab">Lunch</a></li>
-        <li><a href="#Food" data-toggle="tab">Food</a></li>
-        <li><a href="#Sea" data-toggle="tab">Sea</a></li>
+        <li><a href="" ng-click="cate={'categories': 1}" data-toggle="tab">Drinks</a></li>
+        <li><a href="" ng-click="cate={'categories': 2}" data-toggle="tab">Lunch</a></li>
+        <li><a href="" ng-click="cate={'categories': 3}" data-toggle="tab">Food</a></li>
+        <li><a href="" ng-click="cate={'categories': 4}" data-toggle="tab">Sea</a></li>
 
         <li><form class="navbar-form" role="search">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" ng-model="search">
+             <input type="text" class="form-control" placeholder="Search" ng-model="search.$">
             <div class="input-group-btn">
               <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
@@ -57,17 +57,17 @@
                   <table class="table">
                     <tr>
                       <td>
-                         <i class="fa fa-star" aria-hidden="true"></i><a href="http://www.jquery2dotnet.com"> Mas vendidos</a>
+                         <i class="fa fa-star" aria-hidden="true"></i><a href="" ng-click="myFilter = {best_seller: true}"> Mas vendidos</a>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i><a href="http://www.jquery2dotnet.com"> Disponibles</a>
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i><a href="" ng-click="myFilter = {available: true}"> Disponibles</a>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                       <i class="fa fa-sticky-note" aria-hidden="true"></i></span><a href="http://www.jquery2dotnet.com"> Agotados</a>
+                       <i class="fa fa-sticky-note" aria-hidden="true"></i></span><a href= ng-click="myFilter = {available: false}"> Agotados</span>
                       </td>
                     </tr>
                   </table>
@@ -100,17 +100,28 @@
         <div class="col-sm-10 col-md-10">
           <div class="well">
             <div class="tab-content ">
-              <div id="home" class="tab-pane fade in active" ng-controller="cargarProductos">
+              <div id="home" class="tab-pane fade in active" ng-controller="cargarProductos" >
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="datos in productos.products | filter : search">
+                
+                  <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="datos in productos.products | filter:search:strict | filter:myFilter | filter:cate">
                     <div class="col-item">
                       <div class="post-img-content">
                         <img src={{datos.img}} class="img-responsive" />
+                        
                         <span class="post-title">
                           <b>{{datos.name}}</b><br>
-                          <b>{{datos.available}}</b>
+
+                          <div ng-if="datos.available">
+                          <b>Disponible</b>
+                          </div>
+                          <div ng-if="!datos.available">
+                          <b>Agotado</b>
+                          </div>
                         </span>
-                        <span class="round-tag">{{datos.best_seller}}</span>
+                        <div ng-if="datos.best_seller">
+                        <span class="round-tag">top</span>
+                        </div>
+                        
                       </div>
                       <div class="info">
                         <div class="row">
@@ -152,7 +163,7 @@
                                   <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
                                 </div>
                                 <div class="col-xs-6">
-                                  <button href="#home" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="tab">
+                                  <button href="#home" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="tab" ng-click="cate={'categories': 1,2,3,4}">
                                     <span class="glyphicon glyphicon-share-alt"></span> Continue shopping
                                   </button>
                                 </div>
