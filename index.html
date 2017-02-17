@@ -24,12 +24,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   </head>
-  <body>
+  <body ng-controller="cargarProductos">
 
-    <div class="container">
+    <div class="container" >
       <h1 id="TituloTienda">Tienda</h1>
 
-      <button href="#Car" id="botonCarro" class="btn btn-info btn-lg" data-toggle="tab" data-placement="bottom" title="You don't have any products yet."><span class="glyphicon glyphicon-shopping-cart"></span> <span class="items">0</span></button>
+      <button href="#Car" id="botonCarro" ng-click="showItems()" class="btn btn-info btn-lg" data-toggle="tab" data-placement="bottom" title="You don't have any products yet."><span class="glyphicon glyphicon-shopping-cart"></span><span class="items" >{{elementoCarrito}}</span></button>
       <br>
       <br>
       
@@ -103,7 +103,7 @@
            <table class="table">
              <tr>
               <td>
-               <div ng-controller="cargarProductos" class="wrapper">
+               <div  class="wrapper">
                  <div class="slider">
                   Precio minimo <input type="number" min="1000" max="200000"  ng-model= "priceSlider.min" > <br>
                   Precio maximo <input type="number" min="1000" max="200000"  ng-model= "priceSlider.max">
@@ -128,10 +128,11 @@
 <div class="col-sm-10 col-md-10">
   <div class="well">
     <div class="tab-content ">
-      <div id="home" class="tab-pane fade in active" ng-controller="cargarProductos" >
+      <div id="home" class="tab-pane fade in active" >
         <div class="row">
 
           <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="datos in productos.products | filter:search:strict | filter:myFilter | filter:cate | filter:minFilter | filter:maxFilter">
+          <span class="idItem" style="display:none">{{datos.id}}</span>
             <div class="col-item">
               <div class="post-img-content">
                 <img src={{datos.img}} class="img-responsive" />
@@ -162,9 +163,13 @@
                   </div>
                 </div>
                 <div class="separator clear-left">
+                  <div ng-if="datos.available">
                   <p class="btn-add">
-                    <i class="fa fa-shopping-cart"></i><a href="#" class="hidden-sm">Add to cart</a></p>
-
+                    <i class="fa fa-shopping-cart"></i><a href="" class="hidden-sm" class="idItem" value={{datos.id}} ng-click="addItem($event)">Add to cart</a></p>
+                    </div>
+                    <p class="btn-add">
+                    <br>
+                    </p>
                   </div>
                   <div class="clearfix">
                   </div>
@@ -175,10 +180,6 @@
         </div>
 
 
-        <div class="tab-pane fade" id="Drinks">Drink</div>
-        <div class="tab-pane fade" id="Lunch">Lunch</div>
-        <div class="tab-pane fade" id="Food">Food</div>
-        <div class="tab-pane fade" id="Sea">Sea</div>
 
         <div class="tab-pane" id="Car">
           <div class="row">
@@ -199,21 +200,22 @@
                   </div>
                 </div>
                 <div class="panel-body">
-                  <div class="row">
-                    <div class="col-xs-2"><img class="img-responsive" src="http://placehold.it/100x70">
+                  <div class="row" ng-repeat="data in carro">
+                    <div class="col-xs-2"><img class="img-responsive" src={{data.img}}>
                     </div>
                     <div class="col-xs-4">
-                      <h4 class="product-name"><strong>Product name</strong></h4><h4><small>Product description</small></h4>
+                      <h4 class="product-name" ng-model="car.nombre"><strong>{{data.name}}</strong></h4>
+                      <h4 ng-model="car.descripcion"><small>{{data.description}} </small></h4>
                     </div>
                     <div class="col-xs-6">
                       <div class="col-xs-6 text-right">
-                        <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>
+                        <h6 ng-model="car.price"><strong>{{data.price}} <span class="text-muted">x</span></strong></h6>
                       </div>
                       <div class="col-xs-4">
                         <input type="text" class="form-control input-sm" value="1">
                       </div>
                       <div class="col-xs-2">
-                        <button type="button" class="btn btn-link btn-xs">
+                        <button type="button" class="btn btn-link btn-xs" value={{datos.id}} ng-click="removeItem($event)">
                           <span class="glyphicon glyphicon-trash"> </span>
                         </button>
                       </div>

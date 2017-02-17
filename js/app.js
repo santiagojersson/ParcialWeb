@@ -5,7 +5,9 @@ angular.module("rzModule",[]).value("throttle",function(a,b,c){var d,e,f,g=Date.
 
 var app = angular.module('myShop', ['rzModule']);
 
-app.controller('cargarProductos',function($scope,$http){
+app.controller('cargarProductos',function($scope,$http, Data){
+var carri=[];
+$scope.elementoCarrito=0;
 console.log("CARGAR PRODCUTOS");
 	$scope.priceSlider = {
     min: 3000,
@@ -15,25 +17,77 @@ console.log("CARGAR PRODCUTOS");
     step: 1000
   };  
 
- 
+  $scope.addItem = function(e) {
+    var elem = angular.element(e.srcElement).attr("value");
+    for (var i = 0; i < $scope.productos.products.length; i++) {
+      if($scope.productos.products[i].id==elem){
+          Data.setCarrito($scope.productos.products[i]);
+        break;
+      }
+    };
+    $scope.elementoCarrito++;
+    console.log(Data.getCarrito());
+  }
+
+  $scope.removeItem = function(e) {
+    var elem = angular.element(e.srcElement).attr("value");
+    Data.removeItem(elem);
+    $scope.elementoCarrito--;
+    
+  }
+
+  $scope.showItems = function(){
+    $scope.carro=Data.getCarrito();
+    console.log("showItems ");
+    console.log($scope.carro);
+  }
+
+
   $scope.importar= function(){
     
     $http.get('./dataParcial.json').success(function(datos){
      $scope.productos=datos;
      
-     $scope.minFilter = function (datos) {
+      $scope.minFilter = function (datos) {
       
-      return (Number(datos.price)*1000) >= $scope.priceSlider.min;
-    };
+        return (Number(datos.price)*1000) >= $scope.priceSlider.min;
+      };
 
-    $scope.maxFilter = function (datos) {
+      $scope.maxFilter = function (datos) {
       
-      return (Number(datos.price)*1000) <= $scope.priceSlider.max;
-    };
-  });
+        return (Number(datos.price)*1000) <= $scope.priceSlider.max;
+      };
+    });
   }
-console.log($scope.priceSlider.min);
+
   $scope.importar();
 });
 
 
+
+
+
+
+app.factory('Data', function(){
+    // I know this doesn't work, but what will?
+    var carrito=[];
+
+    return {
+        getCarrito: function () {
+            return carrito;
+        },
+        setCarrito: function (item) {
+            carrito.push(item);
+        },
+        removeItem: function(item){
+          var pos=-1;
+            for (var i = 0; i < carrito.length; i++) {
+              if(carrito[i].id==item){
+                pos=i;
+                break;
+              }
+            };
+            carrito.splice(pos, 1);
+        }
+    };
+});
