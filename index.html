@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   </head>
-  <body ng-controller="cargarProductos">
+  <body ng-controller="cargarProductos"> 
 
     <div class="container" >
       <h1 id="TituloTienda">Tienda</h1>
@@ -226,11 +226,11 @@
                 <div class="panel-footer">
                   <div class="row text-center">
                     <div class="col-xs-8">
-                      <h4 class="text-right">Total <strong>$50.00</strong></h4>
+                      <h4 class="text-right">Total <strong>${{total}}</strong></h4>
                     </div>
                     <div class="col-xs-3">
                       <button type="button" class="btn btn-success btn-block">
-                        Checkout
+                        Comprar
                       </button>
                     </div>
                   </div>
@@ -252,8 +252,8 @@
 
 </div> 
 
-<body>
+</body>
 
-
-  <script src="js/app.js"></script>
+ <script type="text/javascript" src="js/app.js"></script>
+ 
   </html>

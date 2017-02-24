@@ -6,9 +6,9 @@ angular.module("rzModule",[]).value("throttle",function(a,b,c){var d,e,f,g=Date.
 var app = angular.module('myShop', ['rzModule']);
 
 app.controller('cargarProductos',function($scope,$http, Data){
-var carri=[];
+
 $scope.elementoCarrito=0;
-console.log("CARGAR PRODCUTOS");
+
 	$scope.priceSlider = {
     min: 3000,
     max: 200000,
@@ -25,21 +25,23 @@ console.log("CARGAR PRODCUTOS");
         break;
       }
     };
-    $scope.elementoCarrito++;
-    console.log(Data.getCarrito());
+    $scope.elementoCarrito=Data.getCarrito().length;
+    $scope.total=Data.getTotal();
+    //console.log(Data.getCarrito());
   }
 
   $scope.removeItem = function(e) {
     var elem = angular.element(e.srcElement).attr("value");
     Data.removeItem(elem);
     $scope.elementoCarrito--;
+    $scope.total=Data.getTotal();
     
   }
 
   $scope.showItems = function(){
     $scope.carro=Data.getCarrito();
-    console.log("showItems ");
-    console.log($scope.carro);
+   //console.log("showItems ");
+    //console.log($scope.carro);
   }
 
 
@@ -71,23 +73,38 @@ console.log("CARGAR PRODCUTOS");
 app.factory('Data', function(){
     // I know this doesn't work, but what will?
     var carrito=[];
-
+    var total=0;
     return {
         getCarrito: function () {
             return carrito;
         },
+        getTotal: function (){
+          return total;
+        },
         setCarrito: function (item) {
+         // console.log(item.price);
+            total=total+(Number(item.price)*1000);
             carrito.push(item);
         },
         removeItem: function(item){
           var pos=-1;
+          var pre=0;
             for (var i = 0; i < carrito.length; i++) {
               if(carrito[i].id==item){
                 pos=i;
                 break;
               }
             };
-            carrito.splice(pos, 1);
+            
+           carrito.splice(pos, 1);
+           var rest=0;
+          for (var i = 0; i <  carrito.length; i++) {
+           pre=pre+(Number(carrito[i].price)*1000);
+
+          };  
+          rest=total-pre;
+          total=total-rest;
+            
         }
     };
 });
