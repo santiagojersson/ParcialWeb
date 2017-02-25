@@ -5,7 +5,7 @@ angular.module("rzModule",[]).value("throttle",function(a,b,c){var d,e,f,g=Date.
 
 var app = angular.module('myShop', ['rzModule']);
 
-app.controller('cargarProductos',function($scope,$http, Data){
+app.controller('cargarProductos',function($scope,$http, Data,$filter){
 
 $scope.elementoCarrito=0;
 
@@ -49,6 +49,9 @@ $scope.elementoCarrito=0;
     
     $http.get('./dataParcial.json').success(function(datos){
      $scope.productos=datos;
+     $scope.productos.products.forEach(function(datos){
+      datos.price= Number(datos.price);
+     });
      
       $scope.minFilter = function (datos) {
       
@@ -59,8 +62,26 @@ $scope.elementoCarrito=0;
       
         return (Number(datos.price)*1000) <= $scope.priceSlider.max;
       };
+
+       $scope.order = function (order) {
+        if (order == '0') {
+          
+            $scope.productos.products = $filter('orderBy')($scope.productos.products, 'name');
+        } else if(order == '1') {
+            $scope.productos.products = $filter('orderBy')($scope.productos.products, '-price');
+        } else{
+            $scope.productos.products = $filter('orderBy')($scope.productos.products, 'price');
+        }
+    }
+
+
     });
   }
+
+
+  
+
+ 
 
   $scope.importar();
 });
